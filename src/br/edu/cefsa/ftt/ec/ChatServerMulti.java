@@ -22,18 +22,18 @@ public class ChatServerMulti implements Runnable {
         ServerSocket servidor = new ServerSocket (porta);
         System.out.println("Porta " + porta + " aberta!");
 
-        // Aguarda alguém se conectar. A execução do servidor
-        // fica bloqueada na chamada do método accept da classe
-        // ServerSocket. Quando alguém se conectar ao servidor, o
-        // método desbloqueia e retorna com um objeto da classe
-        // Socket, que é uma porta da comunicação.
+        // Aguarda alguï¿½m se conectar. A execuï¿½ï¿½o do servidor
+        // fica bloqueada na chamada do mï¿½todo accept da classe
+        // ServerSocket. Quando alguï¿½m se conectar ao servidor, o
+        // mï¿½todo desbloqueia e retorna com um objeto da classe
+        // Socket, que ï¿½ uma porta da comunicaï¿½ï¿½o.
         
-        System.out.println("Aguardando conexão do cliente...");   
+        System.out.println("Aguardando conexï¿½o do cliente...");   
 
         while (true) {
         	
           Socket cliente = servidor.accept();
-          // Cria uma thread do servidor para tratar a conexão
+          // Cria uma thread do servidor para tratar a conexï¿½o
           ChatServerMulti tratamento = new ChatServerMulti(cliente);
           Thread t = new Thread(tratamento);
           // Inicia a thread para o cliente conectado
@@ -46,13 +46,14 @@ public class ChatServerMulti implements Runnable {
 
     /* 
      * A classe Thread, que foi instancia no servidor, implementa Runnable.
-     * Então você terá que implementar sua lógica de troca de mensagens dentro deste método 'run'.
+     * Entï¿½o vocï¿½ terï¿½ que implementar sua lï¿½gica de troca de mensagens dentro deste mï¿½todo 'run'.
      * 
      */
     
     public void run() {
     	
-        System.out.println("Nova conexao com o cliente " + this.cliente.getInetAddress().getHostAddress());
+    	String clientIp = this.cliente.getInetAddress().getHostAddress();
+        System.out.println("Nova conexao com o cliente " + clientIp);
 
         try {
             Scanner s = null;
@@ -60,7 +61,7 @@ public class ChatServerMulti implements Runnable {
 
             //Exibe mensagem no console
             while(s.hasNextLine()){
-                System.out.println(s.nextLine());
+                System.out.println(clientIp + " - " + new java.util.Date() + " - " + s.nextLine());
             }
 
             //Finaliza objetos
